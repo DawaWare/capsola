@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="app/tabs/drugs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Language</ion-label>
+      <ion-select
+        [(ngModel)]="defaultLanguage"
+        (ionChange)="updateDefaultLanguage($event)"
+      >
+        <ion-select></ion-select>
+        <ion-select-option
+          *ngFor="let choice of languageChoices"
+          [value]="choice.value"
+          >{{choice.label}}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Customized Country Data</ion-label>
+      <ion-select
+        [(ngModel)]="defaultCountry"
+        (ionChange)="waitNextVersion($event)"
+      >
+        <ion-select>
+          <ion-select-option
+            *ngFor="let choice of countryChoices"
+            [value]="choice.value"
+            >{{choice.label}}</ion-select-option
+          >
+        </ion-select>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Choose App Color</ion-label>
+      <ion-select [(ngModel)]="defaultColor" (ionChange)="changeColor($event)">
+        <ion-select>
+          <ion-select-option
+            *ngFor="let choice of colorChoices"
+            [value]="choice.value"
+            >{{choice.label}}</ion-select-option
+          >
+        </ion-select>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-text-center ion-padding-bottom">
+    <ion-button size="large" (click)="updateDatabase()">
+      Update Application Data
+    </ion-button>
+  </div>
+  <div class="ion-text-center">
+    <ion-button (click)="showTutorial()"> Show tutorial again </ion-button>
+  </div>
+</ion-content>

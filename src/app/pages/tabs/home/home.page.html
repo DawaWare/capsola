@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-segment
+      [(ngModel)]="segmentType"
+      (ionChange)="changeSegmentTo($event)"
+    >
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="history">
+        <ion-label>History</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <ion-buttons slot="end">
+      <ion-button (click)="chooseToSearchBy()">
+        <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar
+      placeholder="Search By {{searchKey.charAt(0).toUpperCase() + searchKey.slice(1)}}..."
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchInput($event)"
+    >
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+  <div
+    class="notfound ion-padding ion-text-center"
+    *ngIf="drugsToShow.length === 0 && !noHistory && !isLoading"
+  >
+    <ion-text color="medium">
+      <h3>
+        No Drugs Found for input
+        <ion-text color="primary">{{searchTerm}}</ion-text> do you want to make
+        use AI to find the required drug?
+      </h3>
+      <ion-button color="primary" (click)="doApproximateSearch()"
+        >Use AI</ion-button
+      >
+    </ion-text>
+  </div>
+  <div
+    class="notfound ion-padding ion-text-center"
+    *ngIf="drugsToShow.length === 0 && noHistory && !isLoading"
+  >
+    <ion-text color="medium">
+      <h3>No history available yet</h3>
+    </ion-text>
+  </div>
+  <ion-virtual-scroll [items]="drugsToShow" approxItemHeight="100px">
+    <div *virtualItem="let drug">
+      <div class="card" (click)="openDrugDetails(drug)">
+        <div class="avatar">
+          <ion-img height="100" [src]="getDrugImage(drug.id)"></ion-img>
+        </div>
+        <div class="drug-details">
+          <ion-text color="primary">
+            <h3 class="tradename">{{drug.tradename}}</h3>
+          </ion-text>
+          <ion-text color="medium">
+            <p *ngIf="searchKey === 'tradename'" class="activeingredient">
+              {{drug.activeingredient || 'No Known ActiveIngredient'}}
+            </p>
+            <p *ngIf="searchKey !== 'tradename'" class="activeingredient">
+              {{drug[searchKey]}}
+            </p>
+          </ion-text>
+        </div>
+      </div>
+    </div>
+  </ion-virtual-scroll>
+</ion-content>

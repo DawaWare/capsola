@@ -1,0 +1,150 @@
+ion-content {
+  --background: #eee;
+  h3,
+  p {
+    margin: 5px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    border-radius: 12px;
+    height: fit-content;
+
+    /* From https://css.glass */
+    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    .picture-container {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      .picture {
+        padding: 5px;
+        width: 50%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-img {
+          width: auto;
+          height: 100%;
+          //mix-blend-mode: multiply;
+          filter: contrast(1);
+          border: 1px solid #fff;
+        }
+      }
+    }
+
+    .details {
+      justify-content: start;
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      width: 100%;
+      .clickable {
+        border-bottom: 2px solid tomato;
+        display: inline-block;
+        line-height: 0.85;
+      }
+      .detail {
+        margin-inline-start: 16px;
+        width: 100%;
+      }
+      .company-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: calc(100% - 32px);
+      }
+      .tradename {
+        text-align: justify;
+        font-size: 5.4vw;
+        margin-bottom: -1em !important;
+        &::after {
+          content: "";
+          display: inline-block;
+          width: 100%;
+        }
+      }
+    }
+    .actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      .action {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        color: white;
+        .icon {
+          margin-right: 8px;
+        }
+      }
+    }
+    .full-width {
+      width: 100%;
+    }
+    .bg-transparent {
+      background: transparent;
+    }
+    .clickable {
+      border-bottom: 2px solid tomato;
+      display: inline-block;
+      line-height: 0.85;
+    }
+    .similars {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .title {
+        align-self: flex-start;
+        margin-left: 16px;
+      }
+      .card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        padding: 10px;
+        transition: all 0.2s ease-in-out;
+        width: calc(100% - 32px);
+        margin-bottom: 10px;
+        &:hover {
+          transform: scale(1.05);
+        }
+        .name {
+          font-size: 1.2rem;
+          font-weight: bold;
+          text-align: left;
+          margin-bottom: 10px;
+          //trim text
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 75%;
+        }
+
+        .price {
+          font-size: 1.1rem;
+          color: #666666;
+          text-align: right;
+          width: 25%;
+        }
+      }
+    }
+  }
+}

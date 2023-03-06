@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Drug Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div class="card">
+    <div class="picture-container ion-padding-top">
+      <div class="picture">
+        <ion-img height="100" [src]="getDrugImage(drug.id)"></ion-img>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="detail" *ngIf="drug.tradename">
+        <ion-text color="dark">
+          <h3 class="title">Tradename:</h3>
+        </ion-text>
+        <ion-text color="dark">
+          <p class="tradename ion-margin-start ion-text-center">
+            {{drug.tradename}}
+          </p>
+        </ion-text>
+      </div>
+      <div class="detail" *ngIf="activeingredients.length">
+        <ion-text color="dark">
+          <h3 class="title">Active Ingredients:</h3>
+        </ion-text>
+        <ion-text color="danger">
+          <ng-container *ngFor="let item of activeingredients">
+            <p (click)="searchActiveIngredient(item)" class="ion-margin-start">
+              <span>💊 </span> <span class="clickable">{{ item}}</span>
+            </p>
+          </ng-container>
+        </ion-text>
+      </div>
+      <div class="detail" *ngIf="drug.price">
+        <ion-text color="dark">
+          <h3 class="title">
+            Price:
+            <ion-text color="success">{{drug.price}} EGP</ion-text>
+          </h3>
+        </ion-text>
+      </div>
+      <div class="detail" *ngIf="drug.group">
+        <ion-text color="dark">
+          <h3 class="title">Drug group:</h3>
+        </ion-text>
+        <ion-text color="dark">
+          <p class="info ion-margin-start">{{drug.group}}</p>
+        </ion-text>
+      </div>
+      <div class="detail" *ngIf="drug.company">
+        <ion-text color="dark">
+          <h3 class="title">Company:</h3>
+        </ion-text>
+        <p class="company-container" (click)="viewCompanyProducts()">
+          <ion-text class="clickable" color="danger">
+            {{drug.company}}
+          </ion-text>
+        </p>
+      </div>
+      <!-- create action buttons -->
+      <div class="actions ion-padding-start ion-padding-end ion-padding-top">
+        <ion-button
+          class="action"
+          color="warning"
+          expand="block"
+          (click)="googleMore()"
+        >
+          <ion-icon color="light" name="search"></ion-icon>
+          <ion-text color="light">Google more</ion-text></ion-button
+        >
+        <ion-button
+          class="action"
+          color="dark"
+          expand="block"
+          (click)="viewPicture()"
+        >
+          <ion-icon color="light" name="aperture-outline"></ion-icon>
+          <ion-text color="light">View Picture</ion-text></ion-button
+        >
+      </div>
+      <div
+        class="full-width ion-padding-start ion-padding-end ion-padding-bottom"
+      >
+        <ion-button color="dark" expand="full" (click)="togglePharma()">
+          <ion-icon color="light" name="flask-outline"></ion-icon>
+          <ion-text color="light"
+            >{{ showPharma? 'Hide Detailed Pharma' : "View Detailed Pharma"
+            }}</ion-text
+          ></ion-button
+        >
+      </div>
+      <!-- create view pharma section -->
+      <div id="pharma{{drug.id}}" style="height: 1px"></div>
+
+      <div [hidden]="!showPharma">
+        <div>
+          <h3 class="title" *ngIf="drug.composition">Composition:</h3>
+          <div>
+            <p *ngFor="let s of drug.composition?.split('\n')">
+              <strong padding-left>{{s}}</strong>
+            </p>
+          </div>
+        </div>
+        <div>
+          <h3 class="title" *ngIf="drug.pamphlet">Pharmacology</h3>
+          <div padding>
+            <p *ngFor="let s of drug?.pamphlet?.split('\n')">
+              <strong>{{s}}</strong>
+            </p>
+          </div>
+        </div>
+        <div>
+          <h3 class="title" *ngIf="drug.dosage">Dose</h3>
+          <div padding>
+            <p *ngFor="let s of drug?.dosage?.split('\n')">
+              <strong>{{s}}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--create similars section-->
+    <div class="similars">
+      <h3 class="title">Similar Drugs:</h3>
+      <div
+        class="card"
+        *ngFor="let similar of similars"
+        (click)="openDrug(similar)"
+      >
+        <div class="name">
+          <ion-text color="dark">{{similar.tradename}} </ion-text>
+        </div>
+        <div class="price">
+          <ion-text color="danger">{{similar.price}} EGP</ion-text>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

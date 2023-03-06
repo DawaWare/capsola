@@ -1,0 +1,41 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+        <h3 class="no-space-around" color="primary">Welcome:</h3>
+        <ion-list class="no-space-around">
+          <ion-card>
+            <ion-item lines="none" detail="false">
+              <ion-avatar slot="start">
+                <img
+                  src="https://pbs.twimg.com/profile_images/1575633336776663043/Sut3ttWY_400x400.jpg"
+                />
+              </ion-avatar>
+              <ion-label>
+                <h2>Osama Soliman</h2>
+                <p>solimanware@gmail.com</p>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+          <ion-menu-toggle autoHide="false" *ngFor="let p of pages">
+            <ion-item
+              [routerLink]="[p.url]"
+              routerLinkActive="selected"
+              routerDirection="root"
+              lines="none"
+              detail="false"
+            >
+              <ion-icon
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon + '-sharp'"
+              ></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
