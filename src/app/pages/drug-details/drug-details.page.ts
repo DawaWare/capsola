@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationExtras,
   Route,
   Router,
 } from '@angular/router';
-import { DrugsService } from 'src/app/services/drugs.service';
+import { IonInput } from '@ionic/angular';
 import { SITE_URL } from '../../global';
+import { AnalyticsService } from '../../services/analytics.service';
+import { DrugsService } from '../../services/drugs.service';
+import { StorageService } from '../../services/storage.service';
 import {
   Drug,
   SearchableKeys,
   SearchType,
   SegmentType,
 } from '../tabs/home/home.page';
+import { Clipboard } from '@capacitor/clipboard';
 
 @Component({
   selector: 'app-drug-details',
@@ -37,10 +41,14 @@ export class DrugDetailsPage implements OnInit {
   activeingredients: string[] = [];
   showPharma = false;
   similars: Drug[] = [];
+  newPrice: string = '';
+  @ViewChild('ionInputEl', { static: true }) ionInputEl!: IonInput;
   constructor(
     public route: ActivatedRoute,
     private drugsService: DrugsService,
-    private router: Router
+    private router: Router,
+    private analytics: AnalyticsService,
+    private storage: StorageService
   ) {
     this.route.paramMap.subscribe((paramMap) => {
       this.drugId = Number(paramMap.get('id'));
@@ -61,14 +69,34 @@ export class DrugDetailsPage implements OnInit {
     }
   }
   prepareUI() {
-    this.loading = false;
-    console.log(this.drug);
+    this.analytics.setSecreenName(this.drugId.toString());
     this.activeingredients = this.drug.activeingredient.split('+');
     this.loadDrugSimilars().then((drugs) => {
       this.similars = drugs;
-      console.log('similars', this.similars);
+      this.loading = false;
     });
-    console.log(this.activeingredients);
+
+    const checkKey = async (e: any) => {
+      e = e || window.event;
+
+      if (e.keyCode == '38') {
+        // up arrow
+      } else if (e.keyCode == '40') {
+        // down arrow
+        await Clipboard.write({
+          string: this.drug.tradename.split(' ')[0],
+        });
+      } else if (e.keyCode == '37') {
+        // left arrow
+        //go to the previous drug
+        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id - 1]);
+      } else if (e.keyCode == '39') {
+        // right arrow
+        //go to the next drug
+        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id + 1]);
+      }
+    };
+    document.onkeydown = checkKey;
   }
   searchActiveIngredient(item: string) {
     const searchKey: SearchableKeys = 'activeingredient';
@@ -81,7 +109,7 @@ export class DrugDetailsPage implements OnInit {
         searchTerm,
       },
     };
-    this.router.navigate(['/home'], navigationExtras);
+    this.router.navigate(['/app/tabs/drugs'], navigationExtras);
   }
   viewDrugGroup() {
     console.log(this.drug.group);
@@ -171,6 +199,52 @@ export class DrugDetailsPage implements OnInit {
     });
   }
   getDrugImage(id: number) {
-    return `${SITE_URL}/assets/imgs/drugs/${id - 1 > -1 ? id : 0}.jpg`;
+    return `${SITE_URL}/assets/imgs/drugs/${id - 1 > -1 ? id - 1 : 0}.jpg`;
+  }
+
+  updatePrice(event: any) {
+    //value of the new price input
+    const value = event.target!.value;
+    console.log(value);
+
+    this.storage.get('drugs').then((data: string) => {
+      const drugs = JSON.parse(data) as Drug[];
+      for (let i = 0; i < drugs.length; i++) {
+        if (drugs[i].id === this.drug.id) {
+          drugs[i]['newPrice'] = value;
+        }
+      }
+      this.storage.set('drugs', JSON.stringify(drugs));
+    });
+  }
+  async downloadData() {
+    let textFile: any = null;
+    const makeTextFile = function (text: any) {
+      var data = new Blob([JSON.parse(text)], { type: 'text/json' });
+      // If we are replacing a previously generated file we need to
+      // manually revoke the object URL to avoid memory leaks.
+      if (textFile !== null) {
+        window.URL.revokeObjectURL(textFile);
+      }
+      textFile = window.URL.createObjectURL(data);
+      // returns a URL you can use as a href
+      return textFile;
+    };
+    const link = document.createElement('a');
+    link.setAttribute('download', `drugs${this.drug.id}.json`);
+    this.storage.get('drugs').then((drugs) => {
+      link.href = makeTextFile(JSON.stringify(drugs, null, 2));
+      document.body.appendChild(link);
+
+      // wait for the link to be added to the document
+      window.requestAnimationFrame(function () {
+        var event = new MouseEvent('click');
+        link.dispatchEvent(event);
+        document.body.removeChild(link);
+      });
+    });
+  }
+  copyTradename() {
+    document.execCommand('copy');
   }
 }

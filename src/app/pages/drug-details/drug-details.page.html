@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button defaultHref="tabs/drugs"></ion-back-button>
     </ion-buttons>
     <ion-title>Drug Details</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <div class="card">
+  <div class="card" *ngIf="!loading">
     <div class="picture-container ion-padding-top">
       <div class="picture">
         <ion-img height="100" [src]="getDrugImage(drug.id)"></ion-img>
@@ -19,7 +19,7 @@
         <ion-text color="dark">
           <h3 class="title">Tradename:</h3>
         </ion-text>
-        <ion-text color="dark">
+        <ion-text (click)="copyTradename()" color="dark">
           <p class="tradename ion-margin-start ion-text-center">
             {{drug.tradename}}
           </p>
@@ -42,6 +42,15 @@
           <h3 class="title">
             Price:
             <ion-text color="success">{{drug.price}} EGP</ion-text>
+
+            <ion-input
+              style="border: 1ox solid black"
+              #ionInputEl
+              [value]="drug.newPrice"
+              (ionInput)="updatePrice($event)"
+              >{{drug.newPrice}}</ion-input
+            >
+            <ion-button (click)="downloadData()">Download</ion-button>
           </h3>
         </ion-text>
       </div>

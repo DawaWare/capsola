@@ -19,28 +19,21 @@ export class DrugsService {
   }
 
   getDrugs(): any {
-    console.log('i am here');
     if (this.drugs$.getValue().length > 0) {
-      console.log('i am here 2');
       return this.drugs$;
     } else {
-      console.log('i am here 3');
       this.storage.get('drugs').then((data) => {
         if (data) {
-          console.log('i am here 4', JSON.stringify(data));
           const drugs: Drug[] = JSON.parse(data);
           this.drugs$.next(drugs);
         } else {
-          console.log('i am here 5');
           this.http
             .get<Drugs>(API_URL)
             //take the data from the response from drug key
             .pipe(
               map((response: Drugs) => {
                 //save the drugs in the service
-                console.log('i am here 6', response.drugs);
                 this.drugs$.next(response.drugs);
-                console.log('i am here 7');
                 //save the drugs in the storage
                 this.storage.set(
                   'drugs',
@@ -48,9 +41,14 @@ export class DrugsService {
                 );
               })
             )
-            .subscribe((_) => {
-              console.log('data fetched from api');
-            });
+            .subscribe(
+              (_) => {
+                console.log('data fetched from api');
+              },
+              (err) => {
+                console.log('error', err);
+              }
+            );
         }
       });
     }

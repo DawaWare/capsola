@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { debounceTime, Subject } from 'rxjs';
 import { SITE_URL } from '../../../global';
+import { AnalyticsService } from '../../../services/analytics.service';
 import { DrugsService } from '../../../services/drugs.service';
 import { StorageService } from '../../../services/storage.service';
 
@@ -11,6 +12,7 @@ export interface Drug {
   tradename: string;
   activeingredient: string;
   price: string;
+  newPrice?: string;
   company: string;
   group: string;
   pamphlet: string;
@@ -63,7 +65,8 @@ export class HomePage implements OnInit {
     private alertController: AlertController,
     private storage: StorageService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private analytics: AnalyticsService
   ) {
     //TODO: Support browsers that don't support web workers
     if (typeof Worker !== 'undefined') {
@@ -74,6 +77,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.analytics.setSecreenName('Home');
     this.drugsService.drugs$.subscribe((data: Drug[]) => {
       this.drugs = data;
       //send drugs to worker
@@ -286,6 +290,6 @@ export class HomePage implements OnInit {
   }
 
   getDrugImage(id: number) {
-    return `${SITE_URL}/assets/imgs/drugs/${id - 1 > -1 ? id : 0}.jpg`;
+    return `${SITE_URL}/assets/imgs/drugs/${id - 1 > -1 ? id - 1 : 0}.jpg`;
   }
 }

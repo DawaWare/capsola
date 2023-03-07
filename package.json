@@ -9,7 +9,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "build:prod": "ng build --base-href='/ion-app/'",
+    "deploy": "npx angular-cli-ghpages --dir=www -S"
   },
   "private": true,
   "dependencies": {
@@ -19,8 +21,10 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
+    "@capacitor-community/firebase-analytics": "^4.0.0",
     "@capacitor/android": "4.7.0",
     "@capacitor/app": "4.1.1",
+    "@capacitor/clipboard": "^4.1.0",
     "@capacitor/core": "4.7.0",
     "@capacitor/haptics": "4.1.0",
     "@capacitor/keyboard": "4.1.1",
