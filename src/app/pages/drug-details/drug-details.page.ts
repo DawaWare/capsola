@@ -78,6 +78,10 @@ export class DrugDetailsPage implements OnInit {
 
   prepareUI() {
     this.analytics.setSecreenName(this.drugId.toString());
+    this.analytics.logEvent('screen_view', {
+      screen_name: this.drug.tradename,
+    });
+
     this.activeingredients = this.drug.activeingredient.split('+');
     this.loadDrugSimilars().then((drugs) => {
       this.similars = drugs;

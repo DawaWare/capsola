@@ -31,11 +31,7 @@
 </ion-header>
 
 <ion-content>
-  <div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-  </div>
+  <h3 *ngIf="isLoading">Fetching drugs, please wait...</h3>
   <div
     class="notfound ion-padding ion-text-center"
     *ngIf="drugsToShow.length === 0 && !noHistory && !isLoading"
@@ -43,8 +39,8 @@
     <ion-text color="medium">
       <h3>
         No Drugs Found for input
-        <ion-text color="primary">{{searchTerm}}</ion-text> do you want to make
-        use AI to find the required drug?
+        <ion-text color="primary">{{searchTerm}}</ion-text> do you want to use
+        AI to find the required drug?
       </h3>
       <ion-button color="primary" (click)="doApproximateSearch()"
         >Use AI</ion-button
