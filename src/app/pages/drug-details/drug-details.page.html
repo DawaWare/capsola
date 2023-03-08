@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/drugs"></ion-back-button>
+      <ion-back-button defaultHref="app/tabs/drugs"></ion-back-button>
     </ion-buttons>
     <ion-title>Drug Details</ion-title>
     <ion-buttons slot="start" slot="end">
@@ -12,11 +12,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <h1>New Price: {{drug.newPrice}}</h1>
+  <!-- <h1>New Price: {{drug.newPrice}}</h1> -->
   <div class="card" *ngIf="!loading">
     <div class="picture-container ion-padding-top">
       <div class="picture">
-        <!-- <ion-img height="100" [src]="getDrugImage(drug.id)"></ion-img> -->
+        <ion-img height="100" [src]="getDrugImage(drug.id)"></ion-img>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
           <h3 class="title">
             Price:
             <ion-text color="success">{{drug.price}} EGP</ion-text>
-            <ion-button (click)="downloadData()">Download</ion-button>
+            <!-- <ion-button (click)="downloadData()">Download</ion-button> -->
           </h3>
         </ion-text>
       </div>
