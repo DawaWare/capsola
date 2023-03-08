@@ -68,6 +68,14 @@ export class DrugDetailsPage implements OnInit {
       });
     }
   }
+
+  getClipboardAndUpdatePrice() {
+    Clipboard.read().then((data) => {
+      console.log(data);
+      this.updatePrice(data.value);
+    });
+  }
+
   prepareUI() {
     this.analytics.setSecreenName(this.drugId.toString());
     this.activeingredients = this.drug.activeingredient.split('+');
@@ -84,16 +92,20 @@ export class DrugDetailsPage implements OnInit {
       } else if (e.keyCode == '40') {
         // down arrow
         await Clipboard.write({
-          string: this.drug.tradename.split(' ')[0],
+          string: this.drug.tradename,
         });
       } else if (e.keyCode == '37') {
         // left arrow
         //go to the previous drug
-        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id - 1]);
+        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id - 1], {
+          replaceUrl: true,
+        });
       } else if (e.keyCode == '39') {
         // right arrow
         //go to the next drug
-        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id + 1]);
+        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id + 1], {
+          replaceUrl: true,
+        });
       }
     };
     document.onkeydown = checkKey;
@@ -202,11 +214,8 @@ export class DrugDetailsPage implements OnInit {
     return `${SITE_URL}/assets/imgs/drugs/${id - 1 > -1 ? id - 1 : 0}.jpg`;
   }
 
-  updatePrice(event: any) {
-    //value of the new price input
-    const value = event.target!.value;
-    console.log(value);
-
+  updatePrice(value: string) {
+    this.drug.newPrice = value;
     this.storage.get('drugs').then((data: string) => {
       const drugs = JSON.parse(data) as Drug[];
       for (let i = 0; i < drugs.length; i++) {

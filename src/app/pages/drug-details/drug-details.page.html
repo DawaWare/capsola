@@ -4,13 +4,19 @@
       <ion-back-button defaultHref="tabs/drugs"></ion-back-button>
     </ion-buttons>
     <ion-title>Drug Details</ion-title>
+    <ion-buttons slot="start" slot="end">
+      <ion-button (click)="getClipboardAndUpdatePrice()">
+        <ion-icon name="medkit"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
+  <h1>New Price: {{drug.newPrice}}</h1>
   <div class="card" *ngIf="!loading">
     <div class="picture-container ion-padding-top">
       <div class="picture">
-        <ion-img height="100" [src]="getDrugImage(drug.id)"></ion-img>
+        <!-- <ion-img height="100" [src]="getDrugImage(drug.id)"></ion-img> -->
       </div>
     </div>
 
@@ -42,14 +48,6 @@
           <h3 class="title">
             Price:
             <ion-text color="success">{{drug.price}} EGP</ion-text>
-
-            <ion-input
-              style="border: 1ox solid black"
-              #ionInputEl
-              [value]="drug.newPrice"
-              (ionInput)="updatePrice($event)"
-              >{{drug.newPrice}}</ion-input
-            >
             <ion-button (click)="downloadData()">Download</ion-button>
           </h3>
         </ion-text>
