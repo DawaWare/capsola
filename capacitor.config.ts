@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.solimanware.dawaware',
-  appName: 'DawaWare',
+  appId: 'com.dawaware.capsola',
+  appName: 'Capsola',
   webDir: 'www',
   bundledWebRuntime: false,
 };

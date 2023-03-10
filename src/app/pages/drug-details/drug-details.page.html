@@ -56,8 +56,8 @@
         <ion-text color="dark">
           <h3 class="title">Drug group:</h3>
         </ion-text>
-        <ion-text color="dark">
-          <p class="info ion-margin-start">{{drug.group}}</p>
+        <ion-text color="danger" (click)="viewDrugGroupProducts()">
+          <p class="info clickable ion-margin-start">{{drug.group}}</p>
         </ion-text>
       </div>
       <div class="detail" *ngIf="drug.company">
@@ -97,7 +97,7 @@
         <ion-button color="dark" expand="full" (click)="togglePharma()">
           <ion-icon color="light" name="flask-outline"></ion-icon>
           <ion-text color="light"
-            >{{ showPharma? 'Hide Detailed Pharma' : "View Detailed Pharma"
+            >{{ showPharma? 'Hide Detailed Info' : "View Detailed Info"
             }}</ion-text
           ></ion-button
         >
@@ -107,29 +107,14 @@
 
       <div [hidden]="!showPharma">
         <div>
-          <h3 class="title" *ngIf="drug.composition">Composition:</h3>
+          <h3 class="title" *ngIf="drug.info">Details:</h3>
           <div>
-            <p *ngFor="let s of drug.composition?.split('\n')">
+            <p *ngFor="let s of drug.info?.split('\n')">
               <strong padding-left>{{s}}</strong>
             </p>
           </div>
         </div>
-        <div>
-          <h3 class="title" *ngIf="drug.pamphlet">Pharmacology</h3>
-          <div padding>
-            <p *ngFor="let s of drug?.pamphlet?.split('\n')">
-              <strong>{{s}}</strong>
-            </p>
-          </div>
-        </div>
-        <div>
-          <h3 class="title" *ngIf="drug.dosage">Dose</h3>
-          <div padding>
-            <p *ngFor="let s of drug?.dosage?.split('\n')">
-              <strong>{{s}}</strong>
-            </p>
-          </div>
-        </div>
+
       </div>
     </div>
     <!--create similars section-->

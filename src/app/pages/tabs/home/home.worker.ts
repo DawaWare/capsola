@@ -13,7 +13,7 @@ interface Drug {
 }
 let drugs: Drug[] = [];
 addEventListener('message', ({ data }) => {
-  console.log('worker got message: ', data);
+  //console.log('worker got message: ', data);
   //get drugs from main thread and store them in the worker
   if (data.drugs && data.drugs.length > 0) {
     drugs = data.drugs;

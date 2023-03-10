@@ -11,7 +11,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "build:prod": "ng build --base-href='/'",
-    "deploy": "npx angular-cli-ghpages -c 'capsola.app' --dir=www -S"
+    "deploy": "npx angular-cli-ghpages -c 'capsola.app' --dir=www -S",
+    "resources": "capacitor-resources -p android,ios && node resources.js"
   },
   "private": true,
   "dependencies": {

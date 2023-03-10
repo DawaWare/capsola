@@ -1,24 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
-import { API_URL } from '../global';
+import { API_URL,SITE_URL } from '../global';
 import { Drug } from '../pages/tabs/home/home.page';
 import { StorageService } from './storage.service';
 
-interface Drugs {
-  drugs: Drug[];
+export interface Data {
+  version: string;
 }
+
+export interface CurrentAPIResponse {
+  data: Data;
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class DrugsService {
   drugs$: BehaviorSubject<Drug[]> = new BehaviorSubject<Drug[]>([]);
   constructor(private http: HttpClient, private storage: StorageService) {
-    console.log('Drugs Service');
     this.getDrugs();
   }
 
-  getDrugs(): any {
+  checkForUpdate() {
+     this.http.get<CurrentAPIResponse>(`${SITE_URL}/api/current-api-version.json`).subscribe((res:CurrentAPIResponse) => {
+      console.log('current api version', res.data.version);
+      this.storage.get('api-version').then((version) => {
+        console.log('api version', version);
+        if (version !== res) {
+          this.storage.set('api-version', res.data.version);
+          this.storage.remove('drugs')
+        }
+      });
+    })
+  }
+
+
+
+
+  async getDrugs(): Promise<any> {
+    await this.storage.create();
     if (this.drugs$.getValue().length > 0) {
       return this.drugs$;
     } else {
@@ -28,12 +50,21 @@ export class DrugsService {
           this.drugs$.next(drugs);
         } else {
           this.http
-            .get<Drugs>(API_URL)
+            .get<Drug[]>(API_URL)
             //take the data from the response from drug key
             .pipe(
-              map((response: Drugs) => {
+              map((response: Drug[]) => {
+                response.sort((a, b) => {
+                  if (a.tradename > b.tradename) {
+                    return 1;
+                  } else if (a.tradename < b.tradename) {
+                    return -1;
+                  } else {
+                    return 0;
+                  }
+                })
                 //save the drugs in the service
-                this.drugs$.next(response.drugs);
+                this.drugs$.next(response);
                 //save the drugs in the storage
                 this.storage.set(
                   'drugs',
@@ -43,10 +74,10 @@ export class DrugsService {
             )
             .subscribe(
               (_) => {
-                console.log('data fetched from api');
+                //console.log('data fetched from api');
               },
               (err) => {
-                console.log('error', err);
+                //console.log('error', err);
               }
             );
         }

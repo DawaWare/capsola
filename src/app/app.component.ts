@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { StatusBar, Style, StyleOptions } from '@capacitor/status-bar';
-import { Platform } from '@ionic/angular';
+import { IonSplitPane, Platform } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { AnalyticsService } from './services/analytics.service';
+import { DrugsService } from './services/drugs.service';
 import { StorageService } from './services/storage.service';
 
 @Component({
@@ -28,17 +30,19 @@ export class AppComponent {
       icon: 'settings',
     },
   ];
-  constructor(private storage: StorageService) {
-    this.storage.create();
+  @ViewChild('ionSplitPane') ionSplitPane!: IonSplitPane;
+
+  constructor(private storage: StorageService,private drugsService:DrugsService) {
+
 
     const firebaseConfig = {
-      apiKey: 'AIzaSyA7hINvfwNIewY8ct0g7vHR-EDLUau1pRw',
-      authDomain: 'dawaware2023.firebaseapp.com',
-      projectId: 'dawaware2023',
-      storageBucket: 'dawaware2023.appspot.com',
-      messagingSenderId: '969815971044',
-      appId: '1:969815971044:web:9e3335c1f1b099a2f008f1',
-      measurementId: 'G-32XBSGXCKY',
+      apiKey: "AIzaSyC0nT5hUa6w3QEYIULMcufNBrxTmmCuAtk",
+      authDomain: "capsola2023.firebaseapp.com",
+      projectId: "capsola2023",
+      storageBucket: "capsola2023.appspot.com",
+      messagingSenderId: "315458350239",
+      appId: "1:315458350239:web:4aba654b53b9fbb64686aa",
+      measurementId: "G-J24VF5NY8Y"
     };
     FirebaseAnalytics.initializeFirebase(firebaseConfig);
 
@@ -47,11 +51,16 @@ export class AppComponent {
       const primaryColor = style.getPropertyValue('--ion-color-primary');
       StatusBar.setBackgroundColor({ color: primaryColor.trim() }).catch(
         (err) => {
-          console.log("Couldn't set status bar color");
+          //console.log("Couldn't set status bar color");
         }
       );
     } catch (e) {
-      console.log("Couldn't set status bar color");
+      //console.log("Couldn't set status bar color");
     }
+  }
+
+  async ngOnInit() {
+    await this.storage.create();
+    await this.drugsService.checkForUpdate();
   }
 }

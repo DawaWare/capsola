@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { debounceTime, Subject } from 'rxjs';
 import { SITE_URL } from '../../../global';
 import { AnalyticsService } from '../../../services/analytics.service';
@@ -12,12 +12,9 @@ export interface Drug {
   tradename: string;
   activeingredient: string;
   price: string;
-  newPrice?: string;
   company: string;
-  group: string;
-  pamphlet: string;
-  dosage: string;
-  composition: string;
+  info: string;
+  group:string;
 }
 
 export type SearchableKeys =
@@ -43,6 +40,7 @@ export type QueryParams =
   | null
   | undefined;
 
+  const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -66,7 +64,8 @@ export class HomePage implements OnInit {
     private storage: StorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private platform: Platform
   ) {
     //TODO: Support browsers that don't support web workers
     if (typeof Worker !== 'undefined') {
@@ -76,7 +75,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.analytics.setSecreenName('Home');
     this.drugsService.drugs$.subscribe((data: Drug[]) => {
       this.drugs = data;
@@ -93,6 +92,7 @@ export class HomePage implements OnInit {
       this.prepareSearch();
       this.showSearchResults();
     });
+
 
     this.route.queryParams.subscribe(() => {
       const queryParams: QueryParams =
@@ -113,6 +113,14 @@ export class HomePage implements OnInit {
         );
       }
     });
+  }
+
+  isCapacitor(){
+    return this.platform.is('capacitor');
+  }
+
+  downloadOnGooglePlay(){
+    window.open('https://play.google.com/store/apps/details?id=com.dawaware.capsola', '_system');
   }
 
   onSearchInput(event: Event) {
@@ -143,7 +151,7 @@ export class HomePage implements OnInit {
         searchType: 'exact',
       });
     } else if (searchKey && searchType) {
-      console.log('searching with key and type');
+      //console.log('searching with key and type');
       this.worker.postMessage({
         searchTerm: term,
         searchKey: searchKey,
@@ -159,9 +167,9 @@ export class HomePage implements OnInit {
   }
   showSearchResults() {
     this.worker.onmessage = ({ data }) => {
-      console.log(data);
+      //console.log(data);
       if (data.length === 0) {
-        console.log('no results found');
+        //console.log('no results found');
         //this.presentNoResultsFoundAlert();
         this.presenetNotFoundUI();
       } else {
@@ -176,7 +184,7 @@ export class HomePage implements OnInit {
   }
 
   doApproximateSearch() {
-    console.log('open AI');
+    //console.log('open AI');
     this.searchType = 'approximate';
     this.doSearch(this.searchTerm);
     this.searchType = 'exact';
@@ -186,11 +194,11 @@ export class HomePage implements OnInit {
     const customEvent = event as CustomEvent;
     const segmentType: SegmentType = customEvent.detail.value;
     if (segmentType === 'history') {
-      console.log('history');
+      //console.log('history');
       this.storage.get('history').then((data) => {
         if (data) {
           const history = JSON.parse(data);
-          console.log(history);
+          //console.log(history);
           this.drugsToShow = history;
         } else {
           this.drugsToShow = [];
@@ -210,7 +218,7 @@ export class HomePage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //console.log('Confirm Cancel: blah');
           },
         },
         {
@@ -272,14 +280,14 @@ export class HomePage implements OnInit {
     await alert.present();
   }
   openDrugDetails(drug: Drug) {
-    console.log(drug);
+    //console.log(drug);
     this.router.navigate(['app/tabs/drugs/drug', drug.id]);
     this.saveDrugToHistory(drug);
   }
   async saveDrugToHistory(drug: Drug) {
-    console.log('save drug to history');
+    //console.log('save drug to history');
     const history = await this.storage.get('history');
-    console.log(history);
+    //console.log(history);
     if (history) {
       const historyDrugs = JSON.parse(history);
       historyDrugs.push(drug);
@@ -290,6 +298,6 @@ export class HomePage implements OnInit {
   }
 
   getDrugImage(id: number) {
-    return `${SITE_URL}/assets/imgs/drugs/${id - 1 > -1 ? id - 1 : 0}.jpg`;
+    return `${SITE_URL}/assets/imgs5/drugs/${id}.jpg`;
   }
 }

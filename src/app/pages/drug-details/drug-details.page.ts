@@ -33,9 +33,7 @@ export class DrugDetailsPage implements OnInit {
     price: '',
     company: '',
     group: '',
-    pamphlet: '',
-    dosage: '',
-    composition: '',
+    info: '',
   };
   loading: boolean = true;
   activeingredients: string[] = [];
@@ -143,11 +141,25 @@ export class DrugDetailsPage implements OnInit {
     };
     this.router.navigate(['/app/tabs/drugs/'], navigationExtras);
   }
+  viewDrugGroupProducts() {
+    const searchKey: SearchableKeys = 'group';
+    const searchType: SearchType = 'exact';
+    const searchTerm: string = this.drug.group;
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        searchKey,
+        searchType,
+        searchTerm,
+      },
+    };
+    this.router.navigate(['/app/tabs/drugs/'], navigationExtras);
+
+  }
   togglePharma() {
     this.showPharma = !this.showPharma;
   }
   openDrug(drug: Drug) {
-    this.router.navigateByUrl(`/app/tabs/drugs/${drug.id}`);
+    this.router.navigateByUrl(`/app/tabs/drugs/drug/${drug.id}`);
   }
 
   //view drug picture externally
@@ -215,20 +227,20 @@ export class DrugDetailsPage implements OnInit {
     });
   }
   getDrugImage(id: number) {
-    return `${SITE_URL}/assets/imgs/drugs/${id - 1 > -1 ? id - 1 : 0}.jpg`;
+    return `${SITE_URL}/assets/imgs5/drugs/${id}.jpg`;
   }
 
   updatePrice(value: string) {
-    this.drug.newPrice = value;
-    this.storage.get('drugs').then((data: string) => {
-      const drugs = JSON.parse(data) as Drug[];
-      for (let i = 0; i < drugs.length; i++) {
-        if (drugs[i].id === this.drug.id) {
-          drugs[i]['newPrice'] = value;
-        }
-      }
-      this.storage.set('drugs', JSON.stringify(drugs));
-    });
+    // this.drug.newPrice = value;
+    // this.storage.get('drugs').then((data: string) => {
+    //   const drugs = JSON.parse(data) as Drug[];
+    //   for (let i = 0; i < drugs.length; i++) {
+    //     if (drugs[i].id === this.drug.id) {
+    //       drugs[i]['newPrice'] = value;
+    //     }
+    //   }
+    //   this.storage.set('drugs', JSON.stringify(drugs));
+    // });
   }
   async downloadData() {
     let textFile: any = null;

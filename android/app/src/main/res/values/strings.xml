@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">dawadawa</string>
-    <string name="title_activity_main">dawadawa</string>
-    <string name="package_name">com.solimanware.dawadawa</string>
-    <string name="custom_url_scheme">com.solimanware.dawadawa</string>
+    <string name="app_name">Capsola</string>
+    <string name="title_activity_main">Capsola</string>
+    <string name="package_name">com.dawaware.capsola</string>
+    <string name="custom_url_scheme">com.dawaware.capsola</string>
 </resources>

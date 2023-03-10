@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "315458350239",
+    "project_id": "capsola2023",
+    "storage_bucket": "capsola2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315458350239:android:b20e4ecfc22bffe34686aa",
+        "android_client_info": {
+          "package_name": "com.dawaware.capsola"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315458350239-h5laim6rsit8bb9dh5jj2s578cf1sr2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSj5EPt8dfFjY60I0aKqhUn80Ya_O0qgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315458350239-h5laim6rsit8bb9dh5jj2s578cf1sr2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
