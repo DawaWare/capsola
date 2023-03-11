@@ -1,0 +1,13 @@
+{
+  "tabs":{
+    "drugSearch": "Drug Search",
+    "drugInteractions"  : "Drug Interactions",
+    "settings": "Settings"
+  },
+  "settings":"Settings",
+  "language":"Language",
+  "customizedCountryData":"Customized Country Data",
+  "chooseAppColor":"Choose App Color",
+  "updateApplicationData":"Update Application Data",
+  "showTutorialAgain":"Show Tutorial Again"
+}
