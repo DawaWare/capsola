@@ -1,0 +1,90 @@
+
+.footer-top {
+    @include breakpoint(lg) {
+        padding-bottom: 112px;
+    }
+    .logo {
+        max-width: 140px;
+        margin: 0 auto 30px;
+        a {
+            display: block;
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+.footer-bottom {
+    overflow: hidden;
+    padding-bottom: 27px;
+}
+.footer-link {
+    @extend %flex;
+    justify-content: center;
+    margin: -5px -20px;
+    li {
+        padding: 5px 20px;
+        a {
+            font-size: 16px;
+            color: $white-color;
+            &:hover {
+                color: $theme-color;
+            }
+            @include breakpoint(max-sm) {
+                font-size: 14px;
+            }
+        }
+        position: relative;
+        &::after {
+            @extend %pa;
+            width: 2px;
+            height: 19px;
+            background: $border-two;
+            right: 0;
+            top: 11px
+        }
+        &:last-child {
+            &::after {
+                display: none;
+            }
+        }
+    }
+    @include breakpoint(lg) {
+        margin: -5px -40px;
+        li {
+            padding: 5px 40px;
+        }
+    }
+}
+.copyright {
+    text-align: center;
+    color: $white-color;
+    padding: 22px 0;
+    border-top: 1px solid $border-three;
+    p {
+        margin: 0 !important;
+    }
+}
+.footer-section {
+    position: relative;
+    overflow: hidden;
+    &::before {
+        @extend %pa;
+        top: -3px;
+        left: 0;
+        width: 100%;
+        height: 180px;
+        background: url(./img/footer-shape.png) no-repeat center bottom;
+        background-size: cover;
+        @include breakpoint(xl) {
+            height: 210px;
+        }
+        @include breakpoint(max-md) {
+            display: none;
+        }
+    }
+    .container {
+        position: relative;
+        z-index: 1;
+    }
+}

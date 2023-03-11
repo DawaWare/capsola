@@ -1,0 +1,55 @@
+<ion-header>
+<ion-toolbar color="primary">
+  <ion-buttons slot="end">
+    <ion-button color='light' (click)="startApp()" [hidden]="!showSkip">Skip</ion-button>
+  </ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <swiper [slidesPerView]="1" (swiper)="setSwiperInstance($any($event))" (slideChangeTransitionStart)="onSlideChangeStart()">
+    <ng-template swiperSlide>
+      <div class="slide-container">
+      <img src="assets/img/ica-slidebox-img-1.png" class="slide-image" />
+      <h2 class="slide-title">
+        Welcome to
+        <b>Capsola</b>
+      </h2>
+      <p>
+        The
+        <b>Capsola app</b> is making healthcare simplified and working out of the box.
+      </p>
+    </div>
+    </ng-template>
+
+    <ng-template swiperSlide>
+      <div class="slide-container">
+      <img src="assets/img/ica-slidebox-img-2.png" class="slide-image" />
+      <h2 class="slide-title">Features of Capsola</h2>
+      <p>
+        <b>Capsola</b> uses AI to make healthcare more simple. and provide every one with the right care</p>
+        </div>
+    </ng-template>
+
+    <ng-template swiperSlide>
+      <div class="slide-container">
+      <img src="assets/img/ica-slidebox-img-3.png" class="slide-image" />
+      <h2 class="slide-title">What's new in Capsola</h2>
+      <p>
+        You can use AI to search medications, see nearby pharmacies, contact them and make even orders!</p>
+        </div>
+    </ng-template>
+
+    <ng-template swiperSlide>
+      <div class="slide-container">
+      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image" />
+      <h2 class="slide-title">Ready to Play?</h2>
+      <ion-button fill="clear" (click)="startApp()">
+        Continue
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+      </div>
+    </ng-template>
+  </swiper>
+
+</ion-content>

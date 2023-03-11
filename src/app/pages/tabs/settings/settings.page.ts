@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 type LanguageType = 'en' | 'ar';
 type Country = 'Egypt' | 'Kuwait';
@@ -30,11 +31,11 @@ export class SettingsPage implements OnInit {
     { value: 'medium', label: 'Medium' },
     { value: 'dark', label: 'Dark' },
   ];
-  constructor() {}
+  constructor(private translate:TranslateService) {}
 
   ngOnInit() {}
   updateDefaultLanguage(a: any) {
-    console.log(this.defaultLanguage);
+    this.translate.use(this.defaultLanguage);
   }
   waitNextVersion(a: any) {
     console.log('This feature will be available in the next version');

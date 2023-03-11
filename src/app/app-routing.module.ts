@@ -4,8 +4,13 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'app',
+    redirectTo: '/tutorial',
     pathMatch: 'full',
+  },
+  {
+    path: 'tutorial',
+    loadChildren: () =>
+      import('./pages/tutorial/tutorial.module').then((m) => m.TutorialPageModule),
   },
   {
     path: 'app',
@@ -16,6 +21,14 @@ const routes: Routes = [
     path: 'privacy',
     loadChildren: () => import('./pages/privacy/privacy.module').then( m => m.PrivacyPageModule)
   },
+  {
+    path: 'tutorial',
+    loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialPageModule)
+  },
+  {
+    path: 'landing',
+    loadChildren: () => import('./pages/landing/landing.module').then( m => m.LandingPageModule)
+  }
 ];
 
 @NgModule({

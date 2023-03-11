@@ -8,6 +8,7 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
 import { HomePageModule } from './home/home.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { HomePageModule } from './home/home.module';
     IonicModule,
     TabsPageRoutingModule,
     HomePageModule,
+    TranslateModule
   ],
   declarations: [TabsPage],
 })

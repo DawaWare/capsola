@@ -31,6 +31,7 @@ export class DrugsService {
         if (version !== res) {
           this.storage.set('api-version', res.data.version);
           this.storage.remove('drugs')
+          this.drugs$.next([]);
         }
       });
     })

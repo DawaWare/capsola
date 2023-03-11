@@ -1,0 +1,444 @@
+.scrollToTop {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    color: $white-color;
+    z-index: 999;
+    bottom: 30px;
+    right: 30px;
+    position: fixed;
+    border-radius: 5px;
+    @include transform(translateY(150px));
+    background: $theme-two;
+    text-align: center;
+    font-size: 16px;
+    &:hover {
+        color: $white-color;
+    }
+    &.active {
+        @include transform(translateY(0));
+        animation: bounceInDown 2s ;
+        -webkit-animation: bounceInDown 2s ;
+        -moz-animation: bounceInDown 2s ;
+    }
+    img {
+        width: 100%;
+    }
+}
+
+.transparent-button {
+    color: $white-color;
+    border: 1px solid #c087fa;
+    @include border-radius(25px);
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 10px 25px;
+    &:hover {
+        color: $theme-color;
+        background-color: $white-color;
+        border-color: $theme-color;
+    }
+    @include breakpoint(max-sm) {
+        font-size: 16px;
+    }
+}
+.button-2 {
+    color: $white-color;
+    @include border-radius(25px);
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 10px 25px;
+    background: #735ff1;
+    &:hover {
+        color: $theme-color;
+        background-color: $white-color;
+        border-color: $theme-color;
+    }
+    i {
+        margin-left: 5px;
+    }
+    @include breakpoint(max-sm) {
+        font-size: 16px;
+    }
+}
+.app-button-group {
+    @extend %flex;
+    margin-bottom: -20px;
+    margin-right: -30px;
+    .app-button {
+        display: block;
+        margin-bottom: 20px;
+        width: calc(50%);
+        margin-right: 30px;
+        @include border-radius(50px);
+        max-width: 200px;
+        &:hover {
+            box-shadow: 0px 17px 24px 0px rgba(18, 83, 252, 0.51);
+        }
+        img {
+            width: 100%;
+        }
+        @media screen and (max-width: 399px) {
+            width: 100%;
+            max-width: 190px;
+        }
+    }
+}
+.button-3 {
+    text-transform: uppercase;
+    font-weight: 600;
+    @include border-radius(30px);
+    border: 1px solid #cac7f6;
+    color: $title-two;
+    padding: 15px 35px;
+    &.active, &:hover {
+        color: $white-color;
+        border-color: transparent;
+        background: -ms-linear-gradient( -65deg, rgb(193,101,221) 0%, rgb(17,83,252) 100%);
+        background: -moz-linear-gradient( -65deg, rgb(193,101,221) 0%, rgb(17,83,252) 100%);
+        background: -webkit-linear-gradient( -65deg, rgb(193,101,221) 0%, rgb(17,83,252) 100%);
+        box-shadow: 0px 17px 24px 0px rgba(18, 83, 252, 0.51);
+    }
+    &.active {
+        &:hover {
+            background: transparent;
+            border: 1px solid #cac7f6;
+            color: $title-two;
+            box-shadow: none
+        }
+    }
+    i {
+        margin-left: 5px;
+    }
+    &.long-light {
+        padding: 10px 30px;
+        font-weight: 400;
+        text-transform: capitalize;
+        font-size: 16px;
+    }
+}
+.button-group {
+    @extend %flex;
+    margin: -10px;
+    a {
+        margin: 10px;
+        @include breakpoint(lg) {
+            @include breakpoint(max-xl) {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        }
+    }
+}
+.custom-button {
+    color: $white-color;
+    border: 1px solid $theme-color;
+    @include border-radius(25px);
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 10px 35px;
+    font-size: 16px;
+    text-transform: uppercase;
+    background: $theme-color;
+    &:hover {
+        color: $theme-color;
+        background-color: $white-color;
+        border-color: $theme-color;
+    }
+    @include breakpoint(max-sm) {
+        font-size: 16px;
+    }
+}
+.button-4 {
+    text-transform: uppercase;
+    font-weight: 600;
+    @include border-radius(30px);
+    color: $white-color;
+    padding: 15px 45px;
+    background: -ms-linear-gradient( -65deg, rgb(193,101,221) 0%, rgb(17,83,252) 100%);
+    background: -moz-linear-gradient( -65deg, rgb(193,101,221) 0%, rgb(17,83,252) 100%);
+    background: -webkit-linear-gradient( -65deg, rgb(193,101,221) 0%, rgb(17,83,252) 100%);
+    &:hover {        
+        color: $white-color;
+        box-shadow: 0px 17px 24px 0px rgba(18, 83, 252, 0.51);
+    }
+    &.active {
+        background: transparent;
+        border: 1px solid #6e5dc6;
+    }
+}
+.play-button {
+    display: inline-flex;
+    align-items: center;
+    i {
+        font-size: 60px;
+        line-height: 60px;
+    }
+    span {
+        text-transform: capitalize;
+        font-weight: 600;
+        padding-left: 20px;
+    }
+    .video-button {
+        i {
+            line-height: 50px;
+            font-size: 20px;
+        }
+    }
+}
+.banner-button-group {
+    @extend %flex;
+    align-items: center;
+    margin: -10px;
+    a {
+        margin: 10px;
+    }
+    @include breakpoint(sm) {
+        margin: -15px;
+        a {
+            margin: 15px;
+        }
+    }
+}
+
+
+.video-button {
+    width: 51px;
+    height: 51px;
+    line-height: 51px;
+    text-align: center;
+    @include border-radius(50%);
+    background: $theme-one;
+    position: relative;
+    color: $white-color;
+    margin: 0 auto;
+    i {
+        margin-left: 5px;
+    }
+    &::after, &::before {
+        @extend %center;
+        animation: video 25s linear infinite;
+        -webkit-animation: video 25s linear infinite;
+        -moz-animation: video 25s linear infinite;
+        @include transition($transition);
+    }
+    &::before {
+        background: rgba($color: $theme-one, $alpha: 0.161);
+        width: 100px;
+        height: 100px;
+        animation-delay: .5s;
+        -webkit-animation-delay: .5s;
+        -moz-animation-delay: .5s;
+        @include border-radius(33.33% 50%);
+    }
+    &::after {
+        background: rgba($color: $theme-one, $alpha: 0.302);
+        height: 73px;
+        width: 73px;
+    }
+}
+@keyframes video {
+    0% {
+        @include border-radius(33.33% 50%);
+        @include transform(translate(-50%, -50%)rotate(0deg));
+    }
+    100% {
+        @include border-radius(50% 33.33%);
+        @include transform(translate(-50%, -50%)rotate(1800deg));
+    }
+}
+@-webkit-keyframes video {
+    0% {
+        @include border-radius(33.33% 50%);
+        @include transform(translate(-50%, -50%)rotate(0deg));
+    }
+    100% {
+        @include border-radius(50% 33.33%);
+        @include transform(translate(-50%, -50%)rotate(1800deg));
+    }
+}
+@-moz-keyframes video {
+    0% {
+        @include border-radius(33.33% 50%);
+        @include transform(translate(-50%, -50%)rotate(0deg));
+    }
+    100% {
+        @include border-radius(50% 33.33%);
+        @include transform(translate(-50%, -50%)rotate(1800deg));
+    }
+}
+.large-button {
+    @include breakpoint(sm) {
+        padding: 15px 55px;
+        @include border-radius(30px);
+    }
+}
+
+.get-button {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 11px 34px;
+    color: $title-color;
+    border: 1px solid #d4cff4;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    i {
+        margin-left: 14px;
+        @include transition($transition);
+    }
+    &:hover {
+        box-shadow: 0px 17px 24px 0px rgba(18, 83, 252, 0.51);
+        i {
+            padding-left: 5px;
+        }
+    }
+    &.white {
+        color: $white-color;
+    }
+    &.light {
+        font-weight: 400;
+    }
+}
+
+.video-button-2 {
+    @extend %center;
+    width: 280px;
+    height: 280px;
+    @include border-radius(50%);
+    @extend %flex;
+    justify-content: center;
+    overflow: hidden;
+    align-items: center;
+    @media screen and (max-width:400px) {
+        width: 140px;
+        height: 140px;
+    }
+    span {
+        @extend %center;
+        display: block;
+        @include border-radius(50%);
+        width: 50px;
+        height: 50px;
+        &::after , &::before {
+            @extend %center;
+            width: 100%;
+            height: 100%;
+            @include border-radius(50%);
+            border: .1px solid #5bc4e1;
+            animation: videoTwo 8s linear infinite;
+            -webkit-animation: videoTwo 8s linear infinite;
+            -moz-animation: videoTwo 8s linear infinite;
+        }
+        &:nth-child(1) {
+            &::after {
+                animation-delay: 1s;
+                -webkit-animation-delay: 1s;
+                -moz-animation-delay: 1s;
+            }
+        }
+        &:nth-child(2) {
+            &::after {
+                animation-delay: 2s;
+                -webkit-animation-delay: 2s;
+                -moz-animation-delay: 2s;
+            }
+        }
+        &:nth-child(3) {
+            &::after {
+                animation-delay: 3s;
+                -webkit-animation-delay: 3s;
+                -moz-animation-delay: 3s;
+            }
+        }
+        &:nth-child(4) {
+            &::after {
+                animation-delay: 4s;
+                -webkit-animation-delay: 4s;
+                -moz-animation-delay: 4s;
+            }
+        }
+        &:nth-child(1) {
+            &::before {
+                animation-delay: 5s;
+                -webkit-animation-delay: 5s;
+                -moz-animation-delay: 5s;
+            }
+        }
+        &:nth-child(2) {
+            &::before {
+                animation-delay: 6s;
+                -webkit-animation-delay: 6s;
+                -moz-animation-delay: 6s;
+            }
+        }
+        &:nth-child(3) {
+            &::before {
+                animation-delay: 7s;
+                -webkit-animation-delay: 7s;
+                -moz-animation-delay: 7s;
+            }
+        }
+    }
+    i {
+        width: 50px;
+        height: 50px;
+        line-height: 40px;
+        text-align: center;
+        @include border-radius(50%);
+        display: block;
+        background: #2573d5;
+        color: $white-color;
+        border: 5px solid #72a2dd;
+    }
+}
+@keyframes videoTwo {
+    0% {
+        @include transform(translate(-50%, -50%)scale(1));
+        opacity: 1;
+    }
+    100% {
+        @include transform(translate(-50%, -50%)scale(5));
+        opacity: 0;
+    }
+}
+@-webkit-keyframes videoTwo {
+    0% {
+        @include transform(translate(-50%, -50%)scale(1));
+        opacity: 1;
+    }
+    100% {
+        @include transform(translate(-50%, -50%)scale(5));
+        opacity: 0;
+    }
+}
+@-o-keyframes videoTwo {
+    0% {
+        @include transform(translate(-50%, -50%)scale(1));
+        opacity: 1;
+    }
+    100% {
+        @include transform(translate(-50%, -50%)scale(5));
+        opacity: 0;
+    }
+}
+
+
+.button-5 {
+    border: none;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: -moz-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+    background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+    background: -ms-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+    box-shadow: 2.419px 9.703px 12.48px 0.52px rgba(232, 58, 153, 0.5);
+    width: auto;
+    padding: 10px 45px;
+    color: $white-color;
+    margin-top: 20px;
+    &:hover {
+        color: $white-color;
+    }
+}

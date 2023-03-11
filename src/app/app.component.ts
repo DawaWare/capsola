@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { AnalyticsService } from './services/analytics.service';
 import { DrugsService } from './services/drugs.service';
 import { StorageService } from './services/storage.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,7 @@ export class AppComponent {
   ];
   @ViewChild('ionSplitPane') ionSplitPane!: IonSplitPane;
 
-  constructor(private storage: StorageService,private drugsService:DrugsService) {
+  constructor(private storage: StorageService,private drugsService:DrugsService,private translate: TranslateService) {
 
 
     const firebaseConfig = {
@@ -57,6 +58,10 @@ export class AppComponent {
     } catch (e) {
       //console.log("Couldn't set status bar color");
     }
+
+    translate.addLangs(['en', 'ar']);
+    translate.setDefaultLang('en');
+    translate.use('en');
   }
 
   async ngOnInit() {

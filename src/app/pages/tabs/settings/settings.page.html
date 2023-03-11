@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="app/tabs/drugs"></ion-back-button>
     </ion-buttons>
-    <ion-title>Settings</ion-title>
+    <ion-title>{{'settings' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>Language</ion-label>
+      <ion-label>{{'language'|translate}}</ion-label>
       <ion-select
         [(ngModel)]="defaultLanguage"
         (ionChange)="updateDefaultLanguage($event)"
@@ -24,7 +24,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Customized Country Data</ion-label>
+      <ion-label>{{'customizedCountryData'| translate}}</ion-label>
       <ion-select
         [(ngModel)]="defaultCountry"
         (ionChange)="waitNextVersion($event)"
@@ -39,7 +39,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Choose App Color</ion-label>
+      <ion-label>{{'chooseAppColor'|translate}}</ion-label>
       <ion-select [(ngModel)]="defaultColor" (ionChange)="changeColor($event)">
         <ion-select>
           <ion-select-option
@@ -54,10 +54,10 @@
 
   <div class="ion-text-center ion-padding-bottom">
     <ion-button size="large" (click)="updateDatabase()">
-      Update Application Data
+      {{'updateApplicationData' | translate}}
     </ion-button>
   </div>
   <div class="ion-text-center">
-    <ion-button (click)="showTutorial()"> Show tutorial again </ion-button>
+    <ion-button (click)="showTutorial()"> {{'showTutorialAgain'|translate}} </ion-button>
   </div>
 </ion-content>

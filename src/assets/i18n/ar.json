@@ -1,0 +1,13 @@
+{
+  "tabs":{
+    "drugSearch": "البحث",
+    "drugInteractions"  : "التفاعلات",
+    "settings": "الاعدادات"
+  },
+  "settings":"الاعدادات",
+  "language":"اللغة",
+  "customizedCountryData":"بيانات الدولة المخصصة",
+  "chooseAppColor":"اختر لون التطبيق",
+  "updateApplicationData":"تحديث بيانات التطبيق",
+  "showTutorialAgain":"اظهار الدليل مرة اخرى"
+}

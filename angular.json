@@ -20,6 +20,12 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/landing/index.html",
+              {
+                "glob": "**/*",
+                "input": "src/landing",
+                "output": "landing"
+              },
               {
                 "glob": "**/*",
                 "input": "src/assets",
