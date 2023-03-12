@@ -24,10 +24,10 @@ import { Clipboard } from '@capacitor/clipboard';
   styleUrls: ['./drug-details.page.scss'],
 })
 export class DrugDetailsPage implements OnInit {
-  drugId: number = 0;
+  drugId: string = '';
   drugs: Drug[] = [];
   drug: Drug = {
-    id: 0,
+    id: '',
     tradename: '',
     activeingredient: '',
     price: '',
@@ -49,7 +49,7 @@ export class DrugDetailsPage implements OnInit {
     private storage: StorageService
   ) {
     this.route.paramMap.subscribe((paramMap) => {
-      this.drugId = Number(paramMap.get('id'));
+      this.drugId = paramMap.get('id')!;
     });
   }
 
@@ -99,15 +99,15 @@ export class DrugDetailsPage implements OnInit {
       } else if (e.keyCode == '37') {
         // left arrow
         //go to the previous drug
-        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id - 1], {
-          replaceUrl: true,
-        });
+        // this.router.navigate(['/app/tabs/drugs/drug', this.drug.id - 1], {
+        //   replaceUrl: true,
+        // });
       } else if (e.keyCode == '39') {
         // right arrow
         //go to the next drug
-        this.router.navigate(['/app/tabs/drugs/drug', this.drug.id + 1], {
-          replaceUrl: true,
-        });
+        // this.router.navigate(['/app/tabs/drugs/drug', this.drug.id + 1], {
+        //   replaceUrl: true,
+        // });
       }
     };
     document.onkeydown = checkKey;
@@ -226,7 +226,7 @@ export class DrugDetailsPage implements OnInit {
       resolve(similarDrugs);
     });
   }
-  getDrugImage(id: number) {
+  getDrugImage(id: string) {
     return `${SITE_URL}/assets/imgs5/drugs/${id}.jpg`;
   }
 

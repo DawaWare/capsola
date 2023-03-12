@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, AlertInput, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { debounceTime, Subject } from 'rxjs';
 import { SITE_URL } from '../../../global';
 import { AnalyticsService } from '../../../services/analytics.service';
@@ -8,7 +9,7 @@ import { DrugsService } from '../../../services/drugs.service';
 import { StorageService } from '../../../services/storage.service';
 
 export interface Drug {
-  id: number;
+  id: string;
   tradename: string;
   activeingredient: string;
   price: string;
@@ -18,16 +19,13 @@ export interface Drug {
 }
 
 export type SearchableKeys =
+| 'id'
   | 'tradename'
   | 'activeingredient'
-  | 'company'
-  | 'group'
-  | 'pamphlet'
-  | 'dosage'
-  | 'composition'
   | 'price'
-  | 'id'
-  | 'all';
+  | 'company'
+  | 'info'
+  | 'group'
 
 export type SegmentType = 'all' | 'history';
 export type SearchType = 'exact' | 'approximate';
@@ -39,6 +37,12 @@ export type QueryParams =
     }
   | null
   | undefined;
+
+  type ChooseBy   = {
+    label: string;
+    type: string;
+    value: SearchableKeys;
+  }
 
   const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 @Component({
@@ -58,6 +62,7 @@ export class HomePage implements OnInit {
   drugsHistory: Drug[] = [];
   noHistory: boolean = false;
   isLoading: boolean = true;
+  chooseBy: ChooseBy[] = [];
   constructor(
     private drugsService: DrugsService,
     private alertController: AlertController,
@@ -65,7 +70,8 @@ export class HomePage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private analytics: AnalyticsService,
-    private platform: Platform
+    private platform: Platform,
+    private translate: TranslateService
   ) {
     //TODO: Support browsers that don't support web workers
     if (typeof Worker !== 'undefined') {
@@ -73,27 +79,56 @@ export class HomePage implements OnInit {
       // Web workers are not supported in this environment.
       // You should add a fallback so that your program still executes correctly.
     }
+    this.chooseBy = [
+      {
+        label: 'Tradename',
+        type: 'radio',
+        value: 'tradename',
+      },
+      {
+        label: 'Active Ingredient',
+        type: 'radio',
+        value: 'activeingredient',
+      },
+      {
+        label: 'Company',
+        type: 'radio',
+        value: 'company',
+      },
+      {
+        label: 'Group',
+        type: 'radio',
+        value: 'group',
+      },
+      {
+        label: 'Price',
+        type: 'radio',
+        value: 'price',
+      },
+      {
+        label: 'ID',
+        type: 'radio',
+        value: 'id',
+      },
+    ]
   }
 
   async ngOnInit() {
     this.analytics.setSecreenName('Home');
-    this.drugsService.drugs$.subscribe((data: Drug[]) => {
-      this.drugs = data;
-      //send drugs to worker
-      this.worker.postMessage({
-        drugs: this.drugs,
-      });
-
-      this.drugsToShow = this.drugs;
-
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 200);
-      this.prepareSearch();
-      this.showSearchResults();
-    });
+    this.prepareUI()
+    this.handleComdingFromOtherPage();
+    this.doTranslations();
 
 
+  }
+
+  doTranslations(){
+    // this.translate.get(['']).subscribe((res: string) => {
+    //   this.searchTerm = this.translate.instant(this.searchTerm);
+    // })
+  }
+
+  handleComdingFromOtherPage(){
     this.route.queryParams.subscribe(() => {
       const queryParams: QueryParams =
         this.router.getCurrentNavigation()?.extras?.queryParams;
@@ -112,6 +147,24 @@ export class HomePage implements OnInit {
           queryParams.searchType
         );
       }
+    });
+  }
+
+  prepareUI(){
+    this.drugsService.drugs$.subscribe((data: Drug[]) => {
+      this.drugs = data;
+      //send drugs to worker
+      this.worker.postMessage({
+        drugs: this.drugs,
+      });
+
+      this.drugsToShow = this.drugs;
+
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 200);
+      this.prepareSearch();
+      this.showSearchResults();
     });
   }
 
@@ -210,74 +263,39 @@ export class HomePage implements OnInit {
     }
   }
   async chooseToSearchBy() {
-    const alert = await this.alertController.create({
-      header: 'Select To Search By:',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            //console.log('Confirm Cancel: blah');
+    const inputs = this.chooseBy as AlertInput[];
+
+    this.translate.get(['']).subscribe(async(res: string) => {
+      inputs.forEach((input) => {
+        input.label = this.translate.instant(input.value!);
+      });
+      const alert = await this.alertController.create({
+        header: this.translate.instant('selectToSearchBy'),
+        buttons: [
+          {
+            text: this.translate.instant('cancel'),
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              //console.log('Confirm Cancel: blah');
+            },
           },
-        },
-        {
-          text: 'Ok',
-          handler: (data) => {
-            this.searchKey = data;
+          {
+            text: this.translate.instant('ok'),
+            handler: (data) => {
+              if(data){
+                this.searchKey = data;
+              }
+            },
           },
-        },
-      ],
-      inputs: [
-        {
-          label: 'Tradename',
-          type: 'radio',
-          value: 'tradename',
-        },
-        {
-          label: 'Active Ingredient',
-          type: 'radio',
-          value: 'activeingredient',
-        },
-        {
-          label: 'Company',
-          type: 'radio',
-          value: 'company',
-        },
-        {
-          label: 'Group',
-          type: 'radio',
-          value: 'group',
-        },
-        {
-          label: 'Pamphlet',
-          type: 'radio',
-          value: 'pamphlet',
-        },
-        {
-          label: 'Dosage',
-          type: 'radio',
-          value: 'dosage',
-        },
-        {
-          label: 'Composition',
-          type: 'radio',
-          value: 'composition',
-        },
-        {
-          label: 'Price',
-          type: 'radio',
-          value: 'price',
-        },
-        {
-          label: 'ID',
-          type: 'radio',
-          value: 'id',
-        },
-      ],
+        ],
+        inputs: inputs,
+      });
+      await alert.present();
     });
 
-    await alert.present();
+
+
   }
   openDrugDetails(drug: Drug) {
     //console.log(drug);

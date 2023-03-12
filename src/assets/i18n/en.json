@@ -9,5 +9,19 @@
   "customizedCountryData":"Customized Country Data",
   "chooseAppColor":"Choose App Color",
   "updateApplicationData":"Update Application Data",
-  "showTutorialAgain":"Show Tutorial Again"
+  "showTutorialAgain":"Show Tutorial Again",
+  "welcome" : "Welcome",
+  "all":"All",
+  "history":"History",
+  "searchBy":"Search By",
+  "id":"ID",
+  "tradename":"Trade Name",
+  "activeingredient":"Active Ingredient",
+  "price":"Price",
+  "company":"Company",
+  "info":"Info",
+  "group":"Group",
+  "selectToSearchBy":"Select to search by",
+  "ok":"OK",
+  "cancel":"Cancel"
 }

@@ -9,5 +9,19 @@
   "customizedCountryData":"بيانات الدولة المخصصة",
   "chooseAppColor":"اختر لون التطبيق",
   "updateApplicationData":"تحديث بيانات التطبيق",
-  "showTutorialAgain":"اظهار الدليل مرة اخرى"
+  "showTutorialAgain":"اظهار الدليل مرة اخرى",
+  "welcome":"مرحبا",
+  "all":"الكل",
+  "history":"التاريخ",
+  "searchBy":"البحث باستخدام",
+  "id":"الرقم",
+  "tradename":"الاسم التجاري",
+  "activeingredient":"المواد الفعالة",
+  "price":"السعر",
+  "company":"الشركة",
+  "info":"المعلومات",
+  "group":"المجموعة",
+  "selectToSearchBy":"اختر للبحث باستخدام",
+  "ok":"موافق",
+  "cancel":"الغاء"
 }

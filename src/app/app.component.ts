@@ -59,13 +59,42 @@ export class AppComponent {
       //console.log("Couldn't set status bar color");
     }
 
-    translate.addLangs(['en', 'ar']);
-    translate.setDefaultLang('en');
-    translate.use('en');
+    this.translate.addLangs(['en', 'ar']);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+
+
   }
 
   async ngOnInit() {
     await this.storage.create();
     await this.drugsService.checkForUpdate();
+    this.storage.get('defaultLanguage').then((val) => {
+      if (val) {
+        this.translate.setDefaultLang(val);
+        this.translate.use(val);
+        this.translate.reloadLang(val);
+        this.translate.get(['']).subscribe((res: any) => {
+
+          this.pages = [
+            {
+              title: this.translate.instant('tabs.drugSearch'),
+              url: '/app/tabs/drugs',
+              icon: 'search',
+            },
+            {
+              title: this.translate.instant('tabs.drugInteractions'),
+              url: '/app/tabs/interactions',
+              icon: 'medkit',
+            },
+            {
+              title: this.translate.instant('tabs.settings'),
+              url: '/app/tabs/settings',
+              icon: 'settings',
+            },
+          ];
+        });
+      }
+    })
   }
 }

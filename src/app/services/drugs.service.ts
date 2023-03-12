@@ -64,6 +64,15 @@ export class DrugsService {
                     return 0;
                   }
                 })
+                response.forEach((drug) => {
+                  //make all strings
+                  drug.id = drug.id.toString();
+                  drug.price = drug.price.toString();
+                })
+
+
+
+
                 //save the drugs in the service
                 this.drugs$.next(response);
                 //save the drugs in the storage

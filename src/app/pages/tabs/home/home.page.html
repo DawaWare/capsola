@@ -8,10 +8,10 @@
       (ionChange)="changeSegmentTo($event)"
     >
       <ion-segment-button value="all">
-        <ion-label>All</ion-label>
+        <ion-label>{{'all' | translate}}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="history">
-        <ion-label>History</ion-label>
+        <ion-label>{{'history'| translate}}</ion-label>
       </ion-segment-button>
     </ion-segment>
     <ion-buttons slot="end">
@@ -22,7 +22,7 @@
   </ion-toolbar>
   <ion-toolbar color="primary">
     <ion-searchbar
-      placeholder="Search By {{searchKey.charAt(0).toUpperCase() + searchKey.slice(1)}}..."
+      placeholder="{{'searchBy'|translate}} {{searchKey | translate}}..."
       [(ngModel)]="searchTerm"
       (ionInput)="onSearchInput($event)"
     >
